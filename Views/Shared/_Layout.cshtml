@@ -19,7 +19,31 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @* @Html.Partial("_SignOutModal")
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li role="presentation" class="active">
+                        <a data-toggle="modal" data-target="#logoutModal" href="#">Sign out</a>
+                    </li>
+                }
+                else
+                {
+                    <li><a asp-controller="Auth" asp-action="SignIn">Sign in</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav> *@
+         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">testIg</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -37,7 +61,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> 
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />
