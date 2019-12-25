@@ -20,7 +20,7 @@ namespace testIg.Controllers
         public async Task<dynamic> auth([FromQuery] string code)
         {
             var token = await getToken(code);
-            return JsonConvert.DeserializeObject<dynamic>(token);
+            return token;
         }
 
         public async Task<dynamic> getToken(string code)
@@ -29,14 +29,15 @@ namespace testIg.Controllers
             string app_id = "588869918546166";
             string app_secret = "ca64358cac14aa3c996f6dcd543589d2";
             string grant_type = "authorization_code";
-            string redirect_uri = "https://localhost:5001/auth/signin/";
+            string redirect_uri = "https://localhost:5001/auth/signin";
 
             string apiUrl = "https://api.instagram.com/oauth/access_token"; //?app_id=" + app_id + "&app_secret=" + app_secret + "&grant_type=" + grant_type + "&redirect_uri=" + redirect_uri + "&code=" + code;
 
             var values = new Dictionary<string, string> { { "app_id", app_id },
                         { "app_secret", app_secret },
                         { "grant_type", grant_type },
-                        { "redirect_uri", redirect_uri }
+                        { "redirect_uri", redirect_uri },
+                        { "code", code }
                     };
 
             var content = new FormUrlEncodedContent(values);
@@ -55,7 +56,7 @@ namespace testIg.Controllers
             var returnDict = new Dictionary<string, dynamic>(){
                 {"success", false}
             };
-            return returnDict;
+            return JsonConvert.SerializeObject(returnDict);
         }
 
         //CURL
