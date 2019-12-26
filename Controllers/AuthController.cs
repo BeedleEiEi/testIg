@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using testIg.Models;
 
@@ -16,6 +17,11 @@ namespace testIg.Controllers
     [Route("auth")]
     public class AuthController : Controller
     {
+        private IConfiguration _configuration;
+        public AuthController(IConfiguration iConfig)
+        {
+            _configuration = iConfig;
+        }
         [Route("signin")]
         public async Task<dynamic> auth([FromQuery] string code)
         {
@@ -26,8 +32,8 @@ namespace testIg.Controllers
         public async Task<dynamic> getToken(string code)
         {
             var client = new HttpClient();
-            string app_id = "588869918546166";
-            string app_secret = "ca64358cac14aa3c996f6dcd543589d2";
+            string app_id = _configuration.GetValue<string>("app_id");
+            string app_secret = _configuration.GetValue<string>("app_secret");
             string grant_type = "authorization_code";
             string redirect_uri = "https://localhost:5001/auth/signin";
 
